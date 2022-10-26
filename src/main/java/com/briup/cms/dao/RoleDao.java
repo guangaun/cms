@@ -8,4 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface RoleDao extends JpaRepository<Role,Integer> {
     Page<Role>findAll(Pageable pageable);
 
+    Role findByName(String RoleName);
+
 }

@@ -51,6 +51,12 @@ public class Result implements Serializable {
 		result.setData(data);
 		return result;
 	}
+	public static Result success(ResultCode resultCode,Object data) {
+		Result result = new Result();
+		result.setResultCode(resultCode);
+		result.setData(data);
+		return result;
+	}
 
 	/**
 	 * 操作失败，没有返回的数据
@@ -70,6 +76,7 @@ public class Result implements Serializable {
 		result.setData(data);
 		return result;
 	}
+
 
 	public Integer getCode() {
 		return code;

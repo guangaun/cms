@@ -2,8 +2,9 @@ package com.briup.cms.web.controller;
 
 
 import com.briup.cms.bean.User;
-import com.briup.cms.service.impl.UserService;
+import com.briup.cms.service.impl.UserServiceImpl;
 import com.briup.cms.utils.Result;
+import com.briup.cms.utils.ResultCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,24 +15,24 @@ import java.util.List;
 
 @Api(tags = "用户信息管理")
 @RestController
-@RequestMapping("/auto/user")
+@RequestMapping("/auth/user")
 public class UserController {
 
     @Autowired
-    private UserService service;
+    private UserServiceImpl service;
 
     @ApiOperation(value = "分页查询用户信息")
     @GetMapping
     public Result findAllPage(Integer pageNum, Integer pageSize){
         Page<User> userPage = service.getAll(pageNum, pageSize);
-        return Result.success(userPage);
+        return Result.success(ResultCode.SUCCESS,userPage);
     }
 
     @ApiOperation(value = "新增用户信息")
     @PostMapping
     public Result saveUser(@RequestBody User user){
         service.saveOrUpdateUser(user);
-        return Result.success();
+        return Result.success(user);
     }
     @ApiOperation(value = "编辑用户信息")
     @PutMapping
@@ -49,7 +50,7 @@ public class UserController {
 
     @ApiOperation(value = "禁用或解封用户转态")
     @GetMapping("/status")
-    public Result updateUserStatus(@RequestParam("id") Integer id,@RequestParam("status") String status){
+    public Result updateUserStatus( Integer id, String status){
         service.updateUserStatus(id,status);
         return Result.success();
     }

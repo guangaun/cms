@@ -4,15 +4,18 @@ import com.briup.cms.bean.User;
 import com.briup.cms.dao.UserDao;
 import com.briup.cms.exception.ServiceException;
 import com.briup.cms.service.IUserService;
+import com.briup.cms.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
-public class UserService implements IUserService {
+public class UserServiceImpl implements IUserService {
 
     @Autowired
     private UserDao userDao;
@@ -40,13 +43,21 @@ public class UserService implements IUserService {
 
     @Override
     public String login(String username, String password) throws ServiceException {
-        return null;
+        User user = userDao.findByUsername(username);
+        if(user==null){
+            throw  new RuntimeException("用户不存在");
+        }
+        Map<String,Object>userInfo = new HashMap<>();
+        userInfo.put("password",password);
+        String token = JwtUtil.sign(username, userInfo);
+        return token;
+
     }
 
     @Override
     public User findUserByUsername(String username) throws ServiceException {
-//        User user = userDao.findByName(username);
+        User user = userDao.findByUsername(username);
 
-        return null;
+        return user;
     }
 }
