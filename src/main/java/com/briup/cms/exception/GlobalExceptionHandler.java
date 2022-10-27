@@ -2,6 +2,7 @@ package com.briup.cms.exception;
 
 
 import com.briup.cms.utils.Result;
+import com.briup.cms.utils.ResultCode;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,10 +21,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public Result handlerException(Exception ex){
-       if(ex instanceof ServiceException){
 
-          return Result.failure(2004,ex.getMessage());
-       }
-        return Result.failure(10001,ex.getMessage());
+        if(ex instanceof ServiceException){
+            return Result.failure(((ServiceException) ex).getResultCode());
+        }
+
+
+        return Result.failure(0, ex.getMessage());
     }
 }

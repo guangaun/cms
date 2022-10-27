@@ -42,9 +42,9 @@ public class Swagger2Config {
 	
 	private ApiInfo apiInfo() {
 		return new ApiInfoBuilder()
-				.title("XXX管理系统")
-				.description("欢迎访问briup官网，http://www.briup.com")
-				.termsOfServiceUrl("http://www.briup.com")
+				.title("看点资讯系统")
+				.description("欢迎访问github，https://github.com/guangaun/cms/tree/master")
+//				.termsOfServiceUrl("http://www.briup.com")
 				.version("1.0")
 				.build();
 	}

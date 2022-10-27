@@ -2,6 +2,7 @@ package com.briup.cms.web.interceptor;
 
 
 import com.briup.cms.utils.JwtUtil;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  * @Author lining
  * @Date 2022/10/25
  */
+@Component
 public class JWTInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {

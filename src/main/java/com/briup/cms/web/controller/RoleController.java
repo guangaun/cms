@@ -4,6 +4,8 @@ import com.briup.cms.bean.Role;
 import com.briup.cms.service.IRoleService;
 import com.briup.cms.utils.Result;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -37,24 +39,22 @@ public class RoleController {
         service.saveOrUpdateRole(role);
         return Result.success();
     }
-//    @ApiOperation(value = "")
-//    @PutMapping
-//    public Result updateRole(@RequestBody Role role){
-//        //调用service层方式实现功能..
-//        service.saveOrUpdateRole(role);
-//        return Result.success();
-//    }
+
     //分页查询
     @ApiOperation(value = "查询角色")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageNum", value = "当前页码",defaultValue = "1"),
+            @ApiImplicitParam(name = "pageSize", value = "每页大小",defaultValue = "1"),
+    })
     @GetMapping
-    public Result findByPage(Integer pageNum,Integer pageSize){
+    public Result findByPage(@RequestParam("pageNum") Integer pageNum,@RequestParam("pageSize") Integer pageSize){
         Page<Role> rolePage = service.findAll(pageNum, pageSize);
         //补充代码
-        return Result.success(rolePage);
+        return Result.success(rolePage.getContent());
     }
     @ApiOperation(value = "批量删除角色")
     @DeleteMapping
-    public Result deleteBathById(@RequestParam List<Integer> ids){
+    public Result deleteByBath(@RequestParam List<Integer> ids){
         service.deleteRoleInBatch(ids);
         return Result.success();
     }
