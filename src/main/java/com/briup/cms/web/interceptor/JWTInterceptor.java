@@ -2,6 +2,7 @@ package com.briup.cms.web.interceptor;
 
 
 import com.briup.cms.utils.JwtUtil;
+import com.briup.cms.utils.UserInfoUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -34,6 +35,7 @@ public class JWTInterceptor implements HandlerInterceptor {
         JwtUtil.checkSign(token);//如果验证失败，抛出异常对象表示 token无效
 
         //4.验证通过，继续访问controller中方法
+        UserInfoUtil.setUserInfo(JwtUtil.getInfo(token));
         return true;
     }
 }

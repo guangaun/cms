@@ -2,10 +2,19 @@ package com.briup.cms.bean;
 
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
 
+
+@Builder
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "cms_comment")
 public class Comment {
@@ -14,7 +23,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(nullable = false)
-    private String context;
+    private String content;
     @Column(nullable = false)
     private String time;
 
@@ -26,17 +35,14 @@ public class Comment {
     @JoinColumn(name = "article_id")
     private Article articles;
 
-    @OneToMany(mappedBy = "comment")
-    private List<Comment> comments;
+    @OneToMany
+    @JoinColumn(name = "parent_id")
+    private List<Comment> children;
 
     @ManyToOne
-    @JoinColumn(name = "parent_id",insertable = false,updatable = false)
-    private Comment comment;
+    @JoinColumn(name = "parent_id")
+    private Comment parent;
 
-    @Column(name = "parent_id")
-    @ApiModelProperty(value = "父主键")
-//    @JsonIgnore
-    private Integer parentId;
 
 
 

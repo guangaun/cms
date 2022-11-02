@@ -1,8 +1,11 @@
 package com.briup.cms.web.controller;
 
+import com.briup.cms.bean.Article;
 import com.briup.cms.bean.Comment;
 import com.briup.cms.service.ICommentService;
+import com.briup.cms.utils.ObjectUtils;
 import com.briup.cms.utils.Result;
+import com.briup.cms.web.vm.CommentVM;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +23,16 @@ public class CommentController {
 
     @ApiOperation(value = "新增评论")
     @PostMapping
-    public Result addComment(Comment comment){
+    public Result addComment(@RequestBody CommentVM vm){
+        Comment comment = ObjectUtils.vm2Bean(vm, Comment.class);
+
+        comment.setArticles(Article.builder().id(vm.getArticleId()).build());
+
+        if(vm.getParentId()!=null){
+
+            comment.setParent(Comment.builder().id(vm.getParentId()).build());
+        }
+
         service.saveOrUpdateComment(comment);
         return Result.success();
     }

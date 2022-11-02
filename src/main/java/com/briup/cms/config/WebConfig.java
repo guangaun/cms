@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @Author lining
  * @Date 2022/10/25
  */
-//@Configuration
+@Configuration
 public class WebConfig implements WebMvcConfigurer {
 
     public WebConfig() {

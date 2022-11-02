@@ -3,7 +3,9 @@ package com.briup.cms.web.controller;
 
 import com.briup.cms.bean.Article;
 import com.briup.cms.service.IArticleService;
+import com.briup.cms.utils.ObjectUtils;
 import com.briup.cms.utils.Result;
+import com.briup.cms.web.vm.ArticleVM;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +21,9 @@ public class ArticleController {
 
     @ApiOperation(value = "新增资讯")
     @PostMapping
-    public Result addArticle(Article article){
-        service.saveOrUpdateArticle(article);
+    public Result addArticle(@RequestBody ArticleVM articleVM){
+
+        service.saveOrUpdateArticle(ObjectUtils.vm2Bean(articleVM, Article.class));
         return Result.success();
     }
 

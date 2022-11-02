@@ -1,20 +1,45 @@
 package com.briup.cms.service.impl;
 
 import com.briup.cms.bean.Article;
+import com.briup.cms.bean.User;
+import com.briup.cms.config.CmsInfo;
+import com.briup.cms.dao.ArticleDao;
 import com.briup.cms.exception.ServiceException;
 import com.briup.cms.service.IArticleService;
 import com.briup.cms.utils.UserInfoUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class ArticleServiceImpl implements IArticleService {
+
+    @Autowired
+    private ArticleDao dao;
     @Override
     public void saveOrUpdateArticle(Article article) throws ServiceException {
         Integer userId = UserInfoUtil.getUserId();
+        System.out.println("userId = " + userId);
+
+       if(article.getId()==null){
+            article.setPublishTime(new Date());
+            article.setStatus(0);
+            article.setReadTimes(0);
+            article.setThumbUp(0);
+            article.setThumbDown(0);
+           User user = new User();
+           user.setId(userId);
+           article.setUser(user);
+       }else {
+
+       }
+
+        dao.save(article);
+
+
 
     }
 

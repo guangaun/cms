@@ -2,13 +2,16 @@ package com.briup.cms.bean;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
 
+@Builder
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -20,7 +23,7 @@ public class Article {
     @Column(nullable = false)
     private String title;
 //    @Column(length = 1024)
-    private String context;
+    private String content;
     @Column(name = "public_time")
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date publishTime;
@@ -42,6 +45,12 @@ public class Article {
     private Comment comment;
 
 
-
-
+    @Override
+    public String toString() {
+        return "Article{" +
+                "title='" + title + '\'' +
+                ", category=" + category.getId() +
+                ", comment=" + comment +
+                '}';
+    }
 }
